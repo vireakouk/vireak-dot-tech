@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% block content %}
+<section>
+    <div class="container">
+        <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <form method="POST" action="">
+                {% include 'flash.html' %}
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

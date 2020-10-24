@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+{% block content %}
+<section>
+    <div class="container">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h2>Welcome {{ username }}!</h2>
+            {% include 'flash.html' %}
+            <p><a class="lead" href="{{ url_for('NewPost') }}">New Post</a></p>
+            <p><a class="lead" href="{{ url_for('Logout') }}">Logout</a></p>
+            <p><a class="lead" href="{{ url_for('GetToken') }}">Get JSON Web Token</a></p>
+        </div>
+    </div>
+    </div>
+</section>
+<section id="posts" class="bg-light">
+    <div class="container">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h2>Your Posts</h2>
+            <hr/>
+        {% for post in posts %}
+            <h4>{{ post.title }}</h4>
+            <small class="text-muted" >Posted by {{ post.author.username }} on {{ post.date_posted }}</small>
+            <hr/>
+        {% endfor %}
+        </div>
+    </div>
+    </div>
+</section>
+{% endblock %}

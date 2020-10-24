@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <section>
+        <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+              <h2>Register to comment in this blog.</h2>
+              <small class="form-text text-muted">I'll never share your email and phone number with anyone else.</small>
+              <hr/>
+                <form method="POST" action="">
+                    {% include 'flash.html' %}
+                    <div class="form-group">
+                      <label for="username">Username</label>
+                      <input type="text" name="username" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Enter username">
+                    </div>
+                    <div class="form-group">
+                      <label for="email">Email address</label>
+                      <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                    </div>
+                    <div class="form-group">
+                      <label for="tel">Whatsapp or Telegram Number (starting with +country code):</label>
+                      <input type="tel" name="phone" class="form-control" id="tel" placeholder="Telephone">
+                    </div>
+                    <div class="form-group">
+                      <label for="password">Password</label>
+                      <input type="password" name="password" class="form-control" id="password" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                      <label for="password">Re-Enter Password</label>
+                      <input type="password" name="password_again" class="form-control" id="password" placeholder="Password Again">
+                    </div>
+                    <div>
+                      <button type="submit" value="register" class="btn btn-primary">Submit</button>
+                    </div>
+                    <div class="form-group">
+                      <small class="form-text text-muted">
+                          Already Have An Account? <a class="ml-2" href="{{ url_for('Login') }}">Log In</a>
+                      </small>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    </section>
+{% endblock %}

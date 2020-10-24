@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/scrolling-nav.css') }}">
+
+    
+    {% if title %}
+        <title>Vireak.Tech - {{ title }}</title>
+    {% else %}
+      <title>Welcome to Vireak.Tech</title>
+    {% endif %}
+  </head>
+  
+  <body id="page-top">
+    {% include 'nav.html' %}
+
+    {% block content %}
+
+    {% endblock %}
+
+    <!-- Footer -->
+    <footer class="py-5">
+      <div class="container">
+        <p class="m-0 text-center text-dark">Copyright &copy; Your Website 2020</p>
+      </div>
+      <div class="container">
+        <p class="m-0 text-center text-white"><a href="{{ url_for('users.Login') }}">Login</a></p>
+        <p class="m-0 text-center text-white"><a href="{{ url_for('users.Register') }}">Register</a></p>
+      </div>
+      <!-- /.container -->
+    </footer>
+    
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="{{ url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+    <!-- Custom JavaScript for this theme -->
+    <script src="{{ url_for('static', filename='js/scrolling-nav.js') }}"></script>
+  </body>
+</html>

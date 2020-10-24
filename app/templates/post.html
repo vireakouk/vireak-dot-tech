@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <section id="articles">
+        <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                {% include 'flash.html' %}
+                <h4>{{ post.title }}</h4>
+                <small class="text-muted" >Posted by {{ post.author.username }} on {{ post.date_posted }}</small>
+                <hr/>
+                <p>{{ post.content }}</p>
+                <hr/>
+            </div>
+        </div>
+        </div>
+    </section>
+    <section id="comments" class="bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    {% for comment in comments %}
+                    <small class="text-muted" >{{ comment.author.username }} on {{ comment.date_posted }} said:</small>
+                    <hr/>
+                    <p>{{ comment.comment }}</p>
+                    <hr/>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    {% if is_loggedin %}
+                    <h4>Add a comment!</h4>
+                    <hr/>
+                    {% include 'flash.html' %}
+                    <form method="POST" action="">
+                        <div class="form-group">
+                            <textarea name="comment" class="form-control" id="comment" rows="1"></textarea>
+                        </div>
+                        <div>
+                            <button type="submit" value="register" class="btn btn-primary">Post Comment!</button>
+                        </div>
+                    </form>
+                    {% else %}
+                    <h2><a class="ml-2" href="{{ url_for('Login') }}">Login to leave a reply.</a></h2>
+                    </hr>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
