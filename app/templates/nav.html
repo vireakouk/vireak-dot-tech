@@ -8,14 +8,17 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         {% if is_homepage %}
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto text-dark font-weight-bold">
             {% if is_loggedin %}
-                <li class="nav-item"><a class="nav-link js-scroll-trigger text-dark" href="{{ url_for('users.Dashboard') }}">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{{ url_for('users.Dashboard') }}">Dashboard</a></li>
             {% endif %}
-                <li class="nav-item"><a class="nav-link js-scroll-trigger text-dark" href="#services">Services</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger text-dark" href="#articles">Articles</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger text-dark" href="#about">About</a></li>
-                <li class="nav-item"><a class="nav-link js-scroll-trigger text-dark" href="#contact">Contact</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#services">Services</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#works">Works</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#articles">Articles</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#blog">Blog</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#whyme">Why me?</a></li>
+                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contact">Contact</a></li>
             </ul>
         {% else %}
             {% if is_loggedin %}
