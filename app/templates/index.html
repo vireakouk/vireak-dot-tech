@@ -2,8 +2,29 @@
 {% block content %}
     <header class="bg-light">
         <div class="container text-center">
-        <h1 class="font-weight-bold">Import error</h1>
-        <h4 class="font-weight-light">This is an <strong class="font-weight-bold">example</strong> of an <strong class="font-weight-bold">introduction</strong>.</h4>
+        <h1 class="font-weight-bold">Vireak Ouk</h1>
+        <h4 class="font-weight-light">I am an independent <strong class="font-weight-bold">IT</strong> & <strong class="font-weight-bold">Telecom</strong> 
+            consultant, <strong class="font-weight-bold">Data Center</strong> designer and <strong class="font-weight-bold">Network</strong> engineer 
+            based in Phnom Penh, Cambodia.
+        </h4>
+            <div class="row justify-content-center">
+                <div class="col-2">
+                    <a href="https://linkedin.com/in/vireak/">
+                        <img src="{{ url_for('static', filename='/assets/icons/linkedin.svg') }}" width="24" height="24" title="Linkedin">
+                    </a>
+                </div>
+                <div class="col-2 col-lg-auto">
+                    <a href="https://github.com/vireakouk">
+                        <img src="{{ url_for('static', filename='/assets/icons/github.svg') }}" width="24" height="24" title="Github">
+                    </a>
+                </div>
+                <div class="col-2">
+                    <a href="https://twitter.com/vireakouk">
+                        <img src="{{ url_for('static', filename='/assets/icons/twitter.svg') }}" width="24" height="24" title="Twitter">
+                    </a>
+                </div>
+
+            </div>
         </div>
     </header>
 
@@ -51,17 +72,98 @@
                                 <li>Bootstrap's scrollspy feature which highlights which section of the page you're on in the navbar</li>
                                 <li>Minimal custom CSS so you are free to explore your own unique design options</li>
                             </ul>
+                        
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="articles" class="bg-light">
+    <section id="works" class="bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h4 class="font-weight-bold">Some of my past works</h4>
+                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+                        Aut optio velit inventore, expedita quo laboriosam possimus ea consequatur vitae, 
+                        doloribus consequuntur ex. Nemo assumenda laborum vel, labore ut velit dignissimos.</p>
+                    <div class="row bg-light">
+                        <div class="col-lg bg-white p-3 m-2">
+                            <h6 class="font-weight-bold">Project Management</h6>
+                            <ul class="text-muted">
+                                <li>Clickable nav links that smooth scroll to page sections</li>
+                                <li>Responsive behavior when clicking nav links perfect for a one page website</li>
+                            </ul>
+                        </div>
+                        <div class="col-lg bg-white p-3 m-2">
+                            <h6 class="font-weight-bold">Project Management</h6>
+                            <ul class="text-muted">
+                                <li>Clickable nav links that smooth scroll to page sections</li>
+                                <li>Responsive behavior when clicking nav links perfect for a one page website</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="row bg-light">
+                        <div class="col-lg bg-white p-3 m-2">
+                            <h6 class="font-weight-bold">Project Management</h6>
+                            <ul class="text-muted">
+                                <li>Clickable nav links that smooth scroll to page sections</li>
+                                <li>Responsive behavior when clicking nav links perfect for a one page website</li>
+                            </ul>
+                        </div>
+                        <div class="col-lg bg-white p-3 m-2">
+                            <h6 class="font-weight-bold">Project Management</h6>
+                            <ul class="text-muted">
+                                <li>Clickable nav links that smooth scroll to page sections</li>
+                                <li>Responsive behavior when clicking nav links perfect for a one page website</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="row bg-light">
+                        <div class="col-lg bg-white p-3 m-2">
+                            <h6 class="font-weight-bold">Project Management</h6>
+                            <ul class="text-muted">
+                                <li>Clickable nav links that smooth scroll to page sections</li>
+                                <li>Responsive behavior when clicking nav links perfect for a one page website</li>
+                            </ul>
+                        </div>
+                        <div class="col-lg bg-white p-3 m-2">
+                            <h6 class="font-weight-bold">Project Management</h6>
+                            <ul class="text-muted">
+                                <li>Clickable nav links that smooth scroll to page sections</li>
+                                <li>Responsive behavior when clicking nav links perfect for a one page website</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="aboutme">
         <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <h4 class="font-weight-bold">Latest Articles</h4>
+            <h4 class="font-weight-bold">About me</h4>
+            <p class="text-muted">This is a great place to talk about your webpage. This template is purposefully unstyled so you can use it as a boilerplate or starting point for you own landing page designs! This template features:</p>
+            <ul class="text-muted">
+                <li>Clickable nav links that smooth scroll to page sections</li>
+                <li>Responsive behavior when clicking nav links perfect for a one page website</li>
+                <li>Bootstrap's scrollspy feature which highlights which section of the page you're on in the navbar</li>
+                <li>Minimal custom CSS so you are free to explore your own unique design options</li>
+            </ul>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <section id="blog"  class="bg-light">
+        <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h4 class="font-weight-bold">Latest articles from my blog</h4>
                 {% for post in posts %}
                 <h4>{{ post.title }}</h4>
                 <small class="text-muted" >Posted by {{ post.author.username }} on {{ post.date_posted }}</small>
@@ -73,19 +175,28 @@
         </div>
         </div>
     </section>
-
-    <section id="about">
+    <section id="mentorship">
         <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
-            <h4 class="font-weight-bold">About this page</h4>
-            <p class="text-muted">This is a great place to talk about your webpage. This template is purposefully unstyled so you can use it as a boilerplate or starting point for you own landing page designs! This template features:</p>
-            <ul class="text-muted">
-                <li>Clickable nav links that smooth scroll to page sections</li>
-                <li>Responsive behavior when clicking nav links perfect for a one page website</li>
-                <li>Bootstrap's scrollspy feature which highlights which section of the page you're on in the navbar</li>
-                <li>Minimal custom CSS so you are free to explore your own unique design options</li>
-            </ul>
+                <h4 class="font-weight-bold">Mentorship</h4>
+                    <p class="text-muted">I offer mentorship and knowledge sharings to aspiring IT & Network engineers and tech industry
+                        professionals who are committed to learn and improve oneselves.
+                    </p> 
+                    <p class="text-muted">My knowledge is limited what I have learnt and experienced, 
+                        so I won't say I have the absolute best knowledge and that what I know are always right. But I believe that we don't have to know 
+                        everything or become enlightened to share knowledge to others. I know some who learnt very deep and highly advanced stuff, 
+                        but rarely use their knowledge for anything meaningful. To me, it's better to know 10 things and share 10 things, instead of 
+                        knowing 1000 things and share only 1 thing.
+                    </p>
+                    <p class="text-muted">I share everything that I have learnt including intermediate and advanced IP network design, management & 
+                        leadership practices, product development, sales & digital communication strategies, tips and tricks or just general career advices. So if you want to
+                        follow along with me or just want to compliment your knowledge with another perspective, don't hesitate to drop me a message 
+                        and start learning.
+                    </p>
+                    <p class="text-muted">This mentorship is open only to individuals who cannot afford proper trainings. If you or your organizations 
+                        can afford, please consider my training services.
+                    </p>
             </div>
         </div>
         </div>
@@ -101,10 +212,11 @@
                         Phnom Penh, Cambodia<br />
                         Email: <a class="text-muted" href="mailto:vireak.ouk@gmail.com">vireak.ouk@gmail.com</a><br />
                         WhatsApp or Telegram: +855 89 777 939<br />
-                        Timezone: UTC+7
+                        My current time: {{ local_time }}
                     </address>
                 </div>
         </div>
         </div>
     </section>
+
 {% endblock content %}
