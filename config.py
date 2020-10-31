@@ -2,7 +2,10 @@ from os import path, environ
 
 # Define the application directory
 BASE_DIR = path.abspath(path.dirname(__file__))  
-
+ADMIN_EMAILS = [
+    'vireak.ouk@gmail.com',
+    'uncle64@abc.com'
+]
 class DevConfig(object):
     DEBUG = True
     DEVELOPMENT = True
