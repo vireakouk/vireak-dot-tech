@@ -18,7 +18,7 @@ def db_posts(id=None, author_id=None, author=None, limit=None, offset=None) -> o
     if author_id:
         return db.session.query(Post).filter(Post.author_id==author_id).all()
     if author:
-        return db.session.query(Post).filter(Post.author==author).all()
+        return db.session.query(Post).filter(Post.author==author).order_by(Post.id.desc()).all()
     if limit is not None and offset is not None:
        return db.session.query(Post).order_by(Post.id.desc()).limit(limit).offset(offset).all()
     

@@ -1,17 +1,20 @@
-from flask import request, flash, render_template, redirect, url_for, session
+from flask import request, flash, render_template, redirect, url_for, session, abort
 from flask.views import View
-from sqlalchemy.util.compat import u
 
 from config import ADMIN_EMAILS
 from app import db
 from app.users.models import User
+from app.posts.models import Post
 from app.users.forms import RegistrationForm, LoginForm
+from app.posts.forms import PostForm
 from app.utils.userutil import username_taken, email_taken, phone_invalid, phone_taken, format_phone
-from app.utils.authutil import encrypt_password, credential_valid
-from app.utils.dbutil import db_user
+from app.utils.authutil import encrypt_password, credential_valid, is_not_authenticated, login_required, admin_required, user_authenticated
+from app.utils.dbutil import db_comments, db_posts, db_user
 
 class Register(View):
     methods = ['GET', 'POST']
+
+    @is_not_authenticated
     def dispatch_request(self):
         form = RegistrationForm()
 
@@ -58,36 +61,84 @@ class Login(View):
     methods = ['GET', 'POST']
 
     def dispatch_request(self):
+
+        if user_authenticated():
+            return redirect(url_for('users.Dashboard'))
+
         form = LoginForm()
         if request.method == 'POST':
-            username = form.username.data
-            password = form.password.data
+            if form.validate_on_submit():
+                username = form.username.data
+                password = form.password.data
 
-            # try:
-            if credential_valid(username, password):
-                current_user = db_user(username=username)
-                session['active_user'] = {
-                    'id': current_user.id,
-                    'username': current_user.username,
-                    'is_authenticated': True
-                }
+                try:
+                    if credential_valid(username, password):
+                        current_user = db_user(username=username)
+                        session['active_user'] = {
+                            'id': current_user.id,
+                            'username': current_user.username,
+                            'is_authenticated': True
+                        }
+                        
+                        return redirect(url_for('users.Dashboard'))
+                    else:
+                        flash(f'Login Unsuccessful. Please check username and password again.', 'error')
+                        return redirect(url_for(request.endpoint))
 
-                return redirect(url_for('users.Dashboard'))
-            # except:
-            #     flash('Login Unsuccessful. Please check username and password again', 'error')
-            #     return redirect(url_for(request.endpoint))
+                except Exception as e:
+                    flash('Login Unsuccessful. Please check username and password again.', 'error')
+                    return redirect(url_for(request.endpoint))
 
         return render_template('login.html', form=form)
 
 class Dashboard(View):
     methods = ['GET']
-    def dispatch_request(self):      
-        return 'Hello World'
+
+    @login_required
+    def dispatch_request(self):
+        username = session['active_user']['username']
+        current_user = db_user(username=username)
+        if current_user.is_admin:
+             return redirect(url_for('users.Admin'))
+
+        return render_template('dashboard.html', username=username)
+
+class Admin(View):
+    methods = ['GET', 'POST']
+
+    @login_required
+    @admin_required
+    def dispatch_request(self):
+        form = PostForm()
+        username = session['active_user']['username']
+        author = db_user(username=username)
+        posts = db_posts(author=author)
+
+        if request.method == 'POST':
+            if form.validate_on_submit():
+                title = form.title.data
+                content = form.content.data
+                tag = form.tag.data
+
+                try:
+                    new_post = Post(author=author, title=title, content=content, tag=tag)
+                    db.session.add(new_post)
+                    db.session.commit()
+                    flash('Your post is successfully submitted', 'success')
+                    return redirect(url_for(request.endpoint))
+                except Exception as e:
+                    flash('Invalid inputs.', 'error')
+                    return redirect(url_for(request.endpoint))
+
+        return render_template('admin.html', username=username, form=form, posts=posts)
 
 class Logout(View):
     methods = ['GET']
-    def dispatch_request(self):      
-        return 'Hello World'
+    
+    @login_required
+    def dispatch_request(self):
+        session.clear()      
+        return redirect(url_for('users.Login'))
 
 class ResetPassword(View):
     methods = ['GET']
@@ -101,5 +152,24 @@ class UpdateProfile(View):
 
 class DeleteAccount(View):
     methods = ['GET']
-    def dispatch_request(self):      
-        return 'Hello World'
+    
+    @login_required
+    def dispatch_request(self, username:str):      
+        current_username = session['active_user']['username']
+        current_user = db_user(username=current_username)
+        user_account = db_user(username=username)
+
+        if not user_account:
+            abort(403)
+     
+        if current_user.username == user_account.username or current_user.is_admin:
+            db.session.delete(user_account)
+            db.session.commit()
+
+        if current_user.is_admin:
+            flash(f'Account { username } is successfully deleted.', 'success')
+            return redirect(url_for('users.Dashboard'))
+
+        session.clear()
+        flash(f'Account { username } is successfully deleted.', 'success')
+        return redirect(url_for('users.Login'))

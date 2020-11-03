@@ -3,13 +3,12 @@
     <section id="articles">
         <div class="container">
         <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <h2>Latest Articles</h2>
+            <div class="col-lg-8 mx-auto p-5">
+                <h4>Latest Articles</h4>
                 <hr/>
             {% for post in posts %}
-                <h4>{{ post.title }}</h4>
+                <h6 class="font-weight-bold">{{ post.title }}</h6>
                 <small class="text-muted" >Posted by {{ post.author.username }} on {{ post.date_posted }}</small>
-                <hr/>
                 <p>{{ post.content }}</p>
                 <hr/>
             {% endfor %}

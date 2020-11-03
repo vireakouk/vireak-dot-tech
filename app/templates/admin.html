@@ -1,0 +1,58 @@
+{% extends 'layout.html' %}
+{% block content %}
+<section>
+    <div class="container mt-5 pt-3">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h4>Welcome {{ username }}!</h4>
+            {% include 'flash.html' %}
+            <p><a href="{{ url_for('users.Logout') }}">Logout</a></p>
+        </div>
+    </div>
+    </div>
+</section>
+<section>
+    <div class="container">
+    <div class="row">
+        <div class="col-lg-8 mx-auto bg-light p-4">
+            <h4>Create new blog post here.</h4>
+            <form method="POST" action="">
+                {{ form.csrf_token }}
+                <div class="form-group">
+                    <label>{{ form.title.label(class="form-control-label") }}</label>
+                      {{ form.title(class="form-control") }}
+                </div>
+                <div class="form-group">
+                    <label>{{ form.content.label(class="form-control-label") }}</label>
+                      {{ form.content(class="form-control", rows="8", placeholder="Write something") }}
+                </div>
+                <div class="form-group">
+                    <label>{{ form.tag.label(class="form-control-label") }}</label>
+                      {{ form.tag(class="form-control", placeholder="Short tags separated by comma") }}
+                </div>
+                <div>
+                      {{ form.submit(class="btn btn-primary") }}
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>
+</section>
+
+<section id="posts">
+    <div class="container">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <h4>Your Posts</h4>
+            <hr/>
+        {% for post in posts %}
+            <h5>{{ post.title }}</h5>
+            <small class="text-muted">Posted by {{ post.author.username }} on {{ post.date_posted.strftime("%A, %d. %B %Y %I:%M%p") }}</small>
+            <p>{{ post.content }}</p>
+            <hr/>
+        {% endfor %}
+        </div>
+    </div>
+    </div>
+</section>
+{% endblock %}

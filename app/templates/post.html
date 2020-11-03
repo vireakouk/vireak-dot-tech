@@ -19,8 +19,7 @@
             <div class="row">
                 <div class="col-lg-8 mx-auto">
                     {% for comment in comments %}
-                    <small class="text-muted" >{{ comment.author.username }} on {{ comment.date_posted }} said:</small>
-                    <hr/>
+                    <small class="text-muted" >{{ comment.author.username }} on {{ comment.date_posted.strftime("%A, %d %B %Y %I:%M%p") }} said:</small>
                     <p>{{ comment.comment }}</p>
                     <hr/>
                     {% endfor %}
@@ -28,20 +27,20 @@
             </div>
             <div class="row">
                 <div class="col-lg-8 mx-auto">
-                    {% if is_loggedin %}
-                    <h4>Add a comment!</h4>
-                    <hr/>
+                    {% if user_loggedin %}
+                    <h6>Leave a reply</h6>
                     {% include 'flash.html' %}
                     <form method="POST" action="">
+                        {{ form.csrf_token }}
                         <div class="form-group">
-                            <textarea name="comment" class="form-control" id="comment" rows="1"></textarea>
+                            {{ form.comment(class="form-control", rows="2")}}
                         </div>
                         <div>
-                            <button type="submit" value="register" class="btn btn-primary">Post Comment!</button>
+                            {{ form.submit(class="btn btn-primary") }}
                         </div>
                     </form>
                     {% else %}
-                    <h2><a class="ml-2" href="{{ url_for('Login') }}">Login to leave a reply.</a></h2>
+                    <h6><a class="text-muted ml-2" href="{{ url_for('users.Login') }}">Login to leave a reply.</a></h6>
                     </hr>
                     {% endif %}
                 </div>

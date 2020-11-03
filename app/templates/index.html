@@ -176,11 +176,11 @@
             <div class="col-lg-8 mx-auto">
                 <h4 class="font-weight-bold">Latest articles from my blog</h4>
                 {% for post in posts %}
-                <h4>{{ post.title }}</h4>
-                <small class="text-muted" >Posted by {{ post.author.username }} on {{ post.date_posted }}</small>
                 <hr/>
-                <p>{{ post.content }}</p>
-                <hr/>
+                <h6 class="font-weight-bold">{{ post.title }}</h6>
+                <small class="text-muted" >Posted by {{ post.author.username }} on {{ post.date_posted.strftime("%A, %d %B %Y") }}</small>
+                <p class="text-muted">{{ textwrap.shorten(post.content, width=300, placeholder='...') }}</p>
+                <p><a href="{{ url_for('posts.SinglePost', post_id=post.id) }}"><button type="button" class="btn btn-secondary btn-sm">Read More</button></a></p>
                 {% endfor %}
             </div>
         </div>
