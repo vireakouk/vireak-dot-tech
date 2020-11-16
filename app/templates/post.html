@@ -3,13 +3,12 @@
     <section id="articles">
         <div class="container">
         <div class="row">
-            <div class="col-lg-8 mx-auto">
+            <div class="col-lg-8 mx-auto m-5 p-4">
                 {% include 'flash.html' %}
                 <h4>{{ post.title }}</h4>
-                <small class="text-muted" >Posted by {{ post.author.username }} on {{ post.date_posted }}</small>
+                <small class="text-muted" >Posted by {{ post.author.username }} on {{ post.date_posted.strftime("%A, %d %B %Y %I:%M%p") }}</small>
                 <hr/>
                 <p>{{ post.content }}</p>
-                <hr/>
             </div>
         </div>
         </div>
@@ -40,7 +39,7 @@
                         </div>
                     </form>
                     {% else %}
-                    <h6><a class="text-muted ml-2" href="{{ url_for('users.Login') }}">Login to leave a reply.</a></h6>
+                    <h6><a href="{{ url_for('users.Login') }}">Login to leave a reply!</a></h6>
                     </hr>
                     {% endif %}
                 </div>

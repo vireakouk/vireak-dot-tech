@@ -161,8 +161,15 @@ class DeleteAccount(View):
 
         if not user_account:
             abort(403)
-     
+
+        #getting back to this later. This will delete everything. Need better functions to maintain content even users are deleted.
         if current_user.username == user_account.username or current_user.is_admin:
+            user_comments = db_comments(author=user_account)
+            user_posts = db_posts(author=user_account)
+            for comment in user_comments:
+                db.session.delete(comment)
+            for post in user_posts:
+                db.session.delete(post)
             db.session.delete(user_account)
             db.session.commit()
 

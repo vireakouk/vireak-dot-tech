@@ -1,4 +1,3 @@
-from app.utils.dbutil import db_posts
 import textwrap
 
 from flask import render_template

@@ -12,4 +12,3 @@ users.add_url_rule("/admin", view_func=Admin.as_view("Admin"))
 # users.add_url_rule("/<string:username>/resetpassword", view_func=ResetPassword.as_view("ResetPassword"))
 # users.add_url_rule("/<string:username>/updateprofile", view_func=UpdateProfile.as_view("UpdateProfile"))
 users.add_url_rule("/<string:username>/deleteaccount", view_func=DeleteAccount.as_view("DeleteAccount"))
-
