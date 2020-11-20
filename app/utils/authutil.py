@@ -1,8 +1,11 @@
 import bcrypt
 from functools import wraps
+import datetime
 
-from flask import redirect, url_for, session
+from flask import redirect, url_for, session, jsonify, request
+import jwt
 
+from config import SECRET_KEY
 from .dbutil import db_user
 
 def encrypt_password(password):
@@ -40,4 +43,27 @@ def admin_required(func):
 
 def user_authenticated() -> bool:
     return True if 'active_user' in session and session['active_user']['is_authenticated'] else False
+
+def token_required(func):
+    @wraps(func)
+    def f(*args, **kwargs):
+        auth_header = request.headers.get('Authorization')
+        user_token = auth_header.split(' ')[1] if auth_header else None
+
+        if not user_token:
+            return jsonify({'message': 'a valid token is missing. Permission denied.'}), 401
+
+        try:
+            user_token_decoded = jwt.decode(jwt=user_token, key=SECRET_KEY, algorithms='HS256')
+            user_id = user_token_decoded['sub']
+            user_in_db = db_user(id=user_id)
+
+            if user_in_db and user_in_db.username==user_token_decoded['name'] and user_in_db.email==user_token_decoded['email']:
+                return func(*args, **kwargs)
+        except jwt.ExpiredSignatureError:
+            return jsonify({'message': 'Token expired. Please obtain new token.'}), 401
+        except:
+            return jsonify({'message': 'Invalid token.'}), 401
+
+
 

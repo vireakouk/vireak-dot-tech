@@ -1,7 +1,42 @@
-from flask import request, jsonify
-from flask.views import MethodView
+import datetime
 
-from app.utils.dbutil import db_posts
+from flask import request, session, jsonify
+from flask.views import MethodView, View
+import jwt
+
+from config import SECRET_KEY
+from app.utils.dbutil import db_posts, db_user
+
+class GetToken(View):
+    methods = ['GET']
+
+    def dispatch_request(self):
+        username = session['active_user']['username']
+        current_user = db_user(username=username)
+
+        try:
+            payload = {
+                'iss': 'vireak.tech',
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=5),
+                'iat': datetime.datetime.ut(),
+                'name': current_user.username,
+                'email': current_user.email,
+                'sub': current_user.id
+            }
+            token = jwt.encode(payload=payload, key=SECRET_KEY, algorithm='HS256')
+            token = token.decode('UTF-8')
+            message = {
+                'status': 'success',
+                'token': token
+            }
+        except Exception as e:
+            message = {
+                'status': 'fail',
+                'message': 'Unable to generate token. Please try again.'
+            }
+            return jsonify(message), 401
+
+        return jsonify(message), 200
 
 class Postapi(MethodView):
 
