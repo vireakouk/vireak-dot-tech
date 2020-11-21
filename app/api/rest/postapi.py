@@ -1,45 +1,17 @@
-import datetime
+from flask import request, jsonify
+from flask.views import MethodView
 
-from flask import request, session, jsonify
-from flask.views import MethodView, View
-import jwt
+from app.utils.dbutil import db_posts
+from app.utils.authutil import token_required
 
-from config import SECRET_KEY
-from app.utils.dbutil import db_posts, db_user
-
-class GetToken(View):
-    methods = ['GET']
-
-    def dispatch_request(self):
-        username = session['active_user']['username']
-        current_user = db_user(username=username)
-
-        try:
-            payload = {
-                'iss': 'vireak.tech',
-                'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=5),
-                'iat': datetime.datetime.ut(),
-                'name': current_user.username,
-                'email': current_user.email,
-                'sub': current_user.id
-            }
-            token = jwt.encode(payload=payload, key=SECRET_KEY, algorithm='HS256')
-            token = token.decode('UTF-8')
-            message = {
-                'status': 'success',
-                'token': token
-            }
-        except Exception as e:
-            message = {
-                'status': 'fail',
-                'message': 'Unable to generate token. Please try again.'
-            }
-            return jsonify(message), 401
-
-        return jsonify(message), 200
+# curl -X GET \
+#   http://localhost:5001/api/rest/v1/blog \
+#   -H 'Content-Type: application/json' \
+#   -H 'Authorization: Token <_your_token_>'
 
 class Postapi(MethodView):
 
+    @token_required
     def get(self, post_id:int):
         
         try:
@@ -70,6 +42,7 @@ class Postapi(MethodView):
 
 class Blogapi(MethodView):
 
+    @token_required
     def get(self):
         # limit the number of post and starting ID with limit and offset arguments in the GET request
         # example: http:localhost:8000/api/rest/v1/blog?limit=10&offset=3
